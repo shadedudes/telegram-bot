@@ -1,9 +1,16 @@
 import os
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
+from flask import Flask
 
 TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(TOKEN)
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running"
 
 def main_menu():
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -60,4 +67,5 @@ def handle_menu(message):
     else:
         bot.send_message(message.chat.id, "Пожалуйста, выберите вариант из меню.")
 
-bot.infinity_polling()
+if __name__ == "__main__":
+    bot.infinity_polling()
